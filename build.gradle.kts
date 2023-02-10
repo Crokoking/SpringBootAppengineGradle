@@ -1,0 +1,42 @@
+plugins {
+    java
+    id("org.springframework.boot") version "2.7.8"
+    id("io.spring.dependency-management") version "1.1.0"
+    id("com.google.cloud.tools.appengine") version "2.4.5"
+}
+
+group = "com.example"
+version = "0.0.1-SNAPSHOT"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+}
+
+appengine {
+    stage {
+        setArtifact("build/libs/spring-boot-0.0.1-SNAPSHOT.jar")
+    }
+    deploy {
+        projectId = "runeforgeapp"
+        version = "test"
+        promote = false
+    }
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+tasks.appengineStage {
+    dependsOn(tasks.bootJar)
+}
