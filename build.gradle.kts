@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.springframework.boot") version "2.7.8"
+    id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
     id("com.google.cloud.tools.appengine") version "2.4.5"
 }
@@ -9,16 +9,16 @@ group = "com.example"
 version = "0.0.1-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 appengine {
     stage {
-        setArtifact("build/libs/spring-boot-0.0.1-SNAPSHOT.jar")
+        setArtifact(tasks.bootJar.map { j -> j.archiveFile.get().asFile })
     }
     deploy {
         projectId = "runeforgeapp"
-        version = "test"
+        version = "test17"
         promote = false
     }
 }
