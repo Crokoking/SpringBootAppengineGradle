@@ -14,7 +14,7 @@ java {
 
 appengine {
     stage {
-        setArtifact("build/libs/spring-boot-0.0.1-SNAPSHOT.jar")
+        setArtifact(tasks.bootJar.map { j -> j.archiveFile.get().asFile })
     }
     deploy {
         projectId = "runeforgeapp"
